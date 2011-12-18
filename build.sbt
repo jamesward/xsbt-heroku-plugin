@@ -8,7 +8,11 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
-resolvers ++= Seq("Local Maven Repository" at "file://" + System.getProperty("user.home") + "/.m2/repository")
+// Check to see if the user set $M2_HOME to the location of their local Maven repository
+val localMvnRepo = Option(System.getenv("M2_HOME")) orElse 
+                   Option("file://" + System.getProperty("user.home") + "/.m2/repository") 
+				   get
+resolvers ++= Seq("Local Maven Repository" at localMvnRepo)
 
 libraryDependencies ++= Seq(
   "com.heroku.api" % "heroku-api" % "0.1-SNAPSHOT",
